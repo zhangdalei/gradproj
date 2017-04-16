@@ -75,6 +75,8 @@ static int buzzer_open(const hw_module_t* module, const char* id __unused,
     buzzerdev->buzzer_open = buz_open;
     buzzerdev->buzzer_ioclt = buz_ioclt;
 
+	
+
     *device = (hw_device_t *) buzzerdev;
 
     return 0;
