@@ -21,7 +21,7 @@
 static int buz_open(struct buzzer_device_t* buzzer_dev)
 {
 	buzzer_dev->fd = open(BUZZER, O_RDWR);
-	if(buzzer_dev < 0){
+	if(buzzer_dev->fd < 0){
 		ALOGE("open %s error",BUZZER);
 		return -1;
 	}
@@ -34,6 +34,7 @@ static int buz_close(struct hw_device_t* device)
 {
 	struct buzzer_device_t* buzzer_dev = (struct buzzer_device_t*)device;
 	close(buzzer_dev->fd);
+	free(buzzer_dev);
 	return 0;
 }
 
