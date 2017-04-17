@@ -8,7 +8,7 @@
 #define PWM_IOCTL_SET_FREQ		1
 #define PWM_IOCTL_STOP			0
 
-#define HCDEVICE "/dev/input/event4"
+#define HCDEVICE "/dev/input/event0"
 #define BUZZERDEVICE "/dev/pwm"
 
 int main()
@@ -16,14 +16,9 @@ int main()
 	int fd =-1,fd1 = -1, ret=0;
 	struct input_event ev;
 	fd = open(HCDEVICE,O_RDONLY);
-	fd1 = open(BUZZERDEVICE, O_RDWR);
 	if(fd < 0 )
 	{
 		printf("open HC device error \n");
-		return -1;
-	}
-	if(fd1 < 0){
-		printf("open BUZZER device error \n");
 		return -1;
 	}
 	while(1)
@@ -37,13 +32,11 @@ int main()
 			return ret;
 		}
 		printf("------------------------------------\n");
-		printf("type:%hd code:%hd value:%d\n\n",ev.type,ev.code,ev.value);
-		if(ev.type ==1 && ev.code == 2 && ev.value == 1)
-		{
-			ret = ioctl(fd, PWM_IOCTL_SET_FREQ, 3000);
-		}
-		else{
-			ret = ioctl(fd, PWM_IOCTL_STOP, 3000);
+		//printf("type:%hd code:%hd value:%d\n\n",ev.type,ev.code,ev.value);
+		if(ev.type == 1 && ev.code == 2 && ev.value == 1){
+			printf("find somebody\n");
+		}if(ev.type == 1 && ev.code == 2 && ev.value == 0){
+			printf("nobody here\n");
 		}
 	}
 	close(fd);

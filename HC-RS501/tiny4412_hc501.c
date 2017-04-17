@@ -52,7 +52,7 @@ static int __init hc501_init(void)
 		printk(KERN_WARNING "request GPIO %d for %s failed\n", HC_501_PGIO,DEVICE_NAME);
 		return ret;
 	}
-	printk(KERN_INFO "gpio request success \n");
+	//printk(KERN_INFO "gpio request success \n");
 	s3c_gpio_cfgpin(HC_501_PGIO, S3C_GPIO_INPUT);
 	/* 2、分配输入设备结构体 */
 	hc_input_dev->input = input_allocate_device();
@@ -61,7 +61,7 @@ static int __init hc501_init(void)
 		gpio_free(HC_501_PGIO);
 		return -1;
 	}
-	printk(KERN_INFO "alloc input device success \n");
+	//printk(KERN_INFO "alloc input device success \n");
 	/* 3、输入设备功能 */
 	hc_input_dev->input->name = DEVICE_NAME;
 	//hc_input_dev->input->evbit[BITS_TO_LONGS(EV_CNT)] = BIT_MASK(EV_KEY);
@@ -74,10 +74,10 @@ static int __init hc501_init(void)
 	if (ret) {
 		input_free_device(hc_input_dev->input);
 		gpio_free(HC_501_PGIO);
-		printk("register input device error\n");
+		//printk("register input device error\n");
 		return ret;
 	}
-	printk(KERN_INFO "register input device success \n");
+	//printk(KERN_INFO "register input device success \n");
 	/* 5\定时器，扫描红外传感器输入情况  */
 	hc_input_dev->timer = (struct timer_list*)kmalloc(sizeof(struct timer_list),GFP_KERNEL);
 	setup_timer(hc_input_dev->timer, hc_timer,0);
