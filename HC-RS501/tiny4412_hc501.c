@@ -27,7 +27,7 @@
 
 
 #define DEVICE_NAME		"hc_501"
-#define HC501_PGIO		EXYNOS4_GPX1(3)
+#define HC501_PGIO		EXYNOS4_GPX1(0)	// EINT8
 static int hc_irq, flag = 0;
 struct timer_list hc_timer;
 
@@ -53,6 +53,7 @@ static int hc_open (struct inode *inode, struct file *filp)
 	}
 	printk(KERN_INFO "gpio request success \n");
 	s3c_gpio_cfgpin(HC501_PGIO, S3C_GPIO_INPUT);
+	s3c_gpio_setpull(HC501_PGIO, S3C_GPIO_PULL_DOWN);
 	/*  2、申请定时器  */
 	//setup_timer(&hc_timer, tiny4412_hc_timer,1);
 	/*  3、申请中断  */
@@ -84,8 +85,11 @@ static ssize_t hc_read (struct file* file, char __user *buff,
 	unsigned tmp;
 	printk(KERN_INFO "in %s\n",__FUNCTION__);
 	wait_event_interruptible(button_waitq,flag);
+	//s3c_gpio_cfgpin(HC501_PGIO, S3C_GPIO_OUTPUT);
 	tmp = gpio_get_value(HC501_PGIO);
+	//s3c_gpio_cfgpin(HC501_PGIO, S3C_GPIO_INPUT);
 	flag = 0;
+	/* EINT8悬空是被上拉电阻拉高,接上下拉电阻 */
 	if(tmp){
 		data = "1";
 		//printk(KERN_INFO "read data is 1\n");

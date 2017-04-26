@@ -1,0 +1,10 @@
+UsbCamera/*.iml
+/UsbCamera.gradle
+/UsbCamera/local.properties
+/UsbCamera/.idea/workspace.xml
+/UsbCamera/.idea/libraries
+/UsbCamera/.DS_Store
+/UsbCamera/build
+/UsbCamera/.externalNativeBuild
+/UsbCamera/image&jar/
+/UsbCamera/armeabi/
