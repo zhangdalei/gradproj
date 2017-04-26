@@ -7,4 +7,4 @@ UsbCamera/*.iml
 /UsbCamera/build
 /UsbCamera/.externalNativeBuild
 /UsbCamera/image&jar/
-/UsbCamera/armeabi/
+/UsbCamera/jni/armeabi/
